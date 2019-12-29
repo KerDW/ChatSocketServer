@@ -31,8 +31,7 @@ public class WebSocketController : ApiController
         {
             // Quan es connecta un nou usuari: cal afegir el SocketHandler a la Collection, notificar a tothom la incorporació i donar-li la benvinguda
             Sockets.Add(this);
-            Sockets.Broadcast(this._nom+" s'ha connectat.");
-            this.Send("Benvingut " + this._nom);
+            Sockets.Broadcast("[" + DateTime.Now.ToString("HH:mm:ss") + "] " + this._nom+" joined the chat.");
         }
 
         public override void OnMessage(string message)
@@ -47,7 +46,7 @@ public class WebSocketController : ApiController
             // Quan un usuari desconnecta, cal acomiadar-se'n, esborrar-ne el SocketHandler de la Collection i notificar a la resta que marxa
             this.Send("Adeu " + this._nom);
             Sockets.Remove(this);
-            Sockets.Broadcast(this._nom+" ha marxat de la conversa.");
+            Sockets.Broadcast("[" + DateTime.Now.ToString("HH:mm:ss") + "] " + this._nom+" left the chat.");
 
         }
     }
